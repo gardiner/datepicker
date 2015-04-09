@@ -54,13 +54,13 @@
 .datepicker.basic .picker {
     padding: 15px;
     background: white;
-    border: 1px solid #666;
+    border: 1px solid #888;
     border-radius: 3px;
     box-shadow: 2px 4px 14px rgba(0, 0, 0, 0.2);
     font-size: 90%;
 }
 .datepicker.basic .picker .header {
-    padding: 0 0 5px 0;
+    padding: 0 0 8px 0;
 }
 .datepicker.basic .picker table td,
 .datepicker.basic .picker table th {
@@ -80,24 +80,26 @@
 .datepicker.flat .picker {
     max-width: 500px;
     padding: 0;
-    background: #eee;
+    background: #EBEEF0;
     color: #444;
     font: normal normal 14px/20px sans-serif;
 }
 .datepicker.flat .picker .header {
-    padding: 10px 0;
-    background: #64666C;
-    color: #F0F0F0;
+    background: #337E9D;
+    color: #fafafa;
     font-size: 85%;
+    line-height: 40px;
     text-transform: uppercase;
 }
 .datepicker.flat .picker .header .prev {
-    padding: 0 5px;
+    padding: 0 10px;
     left: 20px;
+    font-size: 80%;
 }
 .datepicker.flat .picker .header .next {
-    padding: 0 5px;
+    padding: 0 10px;
     right: 20px;
+    font-size: 80%;
 }
 .datepicker.flat .picker .calendar {
     margin: 10px 20px;
@@ -105,7 +107,7 @@
 .datepicker.flat .picker table th {
     opacity: 0.5;
     font-weight: normal;
-    font-size: 85%;
+    font-size: 80%;
 }
 .datepicker.flat .picker table td,
 .datepicker.flat .picker table th {

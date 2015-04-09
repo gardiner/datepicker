@@ -32,13 +32,13 @@
 
     <div class="jquery">
       <div class="formrow">
-        <label for="date1">Input[type="text"]</label>
+        <label for="date1">Input[type="text"], basic style</label>
         <input id="date1" type="text" class="datepicker"/>
         <span class="value"></span>
       </div>
 
       <div class="formrow">
-        <label for="date2">Input[type="date"]</label>
+        <label for="date2">Input[type="date"], basic style</label>
         <input id="date2" type="date" class="datepicker"/>
         <span class="value"></span>
       </div>
@@ -47,18 +47,18 @@
     <h3>angular.js</h3>
     <div class="angular" data-ng-app="datepicker.demo">
       <div class="formrow">
-        <label for="date3">Input[type="text"]</label>
+        <label for="date3">Input[type="text"], flat style</label>
         <input id="date3" type="text" data-datepicker="{theme: 'flat'}" data-ng-model="value3"/>
         <span class="value">{{ value3 }}</span>
       </div>
 
       <div class="formrow">
-        <label for="date4">Input[type="date"]</label>
+        <label for="date4">Input[type="date"], no style</label>
         <input id="date4" type="date" data-datepicker="{theme: false}" data-ng-model="value4"/>
         <span class="value">{{ value4 }}</span>
       </div>
 
-      <button data-ng-click="value4=now;value3='01.01.2022'">Do</button>
+      <button data-ng-click="value3='01.01.2022';value4=now;">Set date</button>
     </div>
 
   </body>

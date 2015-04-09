@@ -10,7 +10,8 @@ function Datepicker(element, options) {
             dateformat: 'DD.MM.YYYY',
             placeholder: $element.attr('placeholder') || '',
             theme: 'basic',
-            readonly: true
+            readonly: true,
+            vertical_offset: 3
         };
 
     self.options = $.extend({}, defaults, options);
@@ -37,7 +38,7 @@ Datepicker.prototype.init = function() {
     })
     .on('_reposition.datepicker', function() {
         var pos = self.$input.offset();
-        pos.top += self.$input.outerHeight();
+        pos.top += self.$input.outerHeight() + self.options.vertical_offset;
         self.$picker
         .offset(pos);
     })
