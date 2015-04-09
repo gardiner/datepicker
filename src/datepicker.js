@@ -10,6 +10,7 @@ function Datepicker(element, options) {
             dateformat: 'DD.MM.YYYY',
             placeholder: $element.attr('placeholder') || '',
             theme: 'basic',
+            readonly: true
         };
 
     self.options = $.extend({}, defaults, options);
@@ -70,6 +71,7 @@ Datepicker.prototype.init = function() {
 
 
     self.$input = $('<input type="text"/>')
+    .attr('readonly', self.options.readonly)
     .attr('class', self.$element.attr('class'))
     .addClass("input")
     .attr('placeholder', self.options.placeholder)
