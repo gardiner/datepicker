@@ -74,7 +74,7 @@ Datepicker.prototype.init = function() {
         self.set_value(self.parse_value(this));
     })
     .on('click.datepicker focus.datepicker', function(e) {
-        if (e.type == 'click' && self.$picker.is(':visible') && (new Date() - lastopened > 100)) {
+        if (e.type == 'click' && self.$picker.is(':visible') && (new Date() - lastopened > 500)) {
             self.$element.trigger('hidedatepicker');
         } else {
             $('.hasDatepicker').not(self.$element).trigger('hidedatepicker');
