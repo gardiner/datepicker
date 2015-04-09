@@ -11,7 +11,8 @@ function Datepicker(element, options) {
             placeholder: $element.attr('placeholder') || '',
             theme: 'basic',
             readonly: true,
-            vertical_offset: 3
+            vertical_offset: 3,
+            is_invalid_date: null
         };
 
     self.options = $.extend({}, defaults, options);
@@ -241,12 +242,7 @@ if (typeof angular != 'undefined') {
             restrict: 'A',
             require: '?ngModel',
             link: function(scope, element, attrs, ngModel) {
-                var defaults = {
-                        vspace: 0,
-                        dateformat: 'DD.MM.YYYY',
-                        is_invalid_date: null
-                    },
-                    options = angular.extend({}, defaults, scope.$eval(attrs.datepicker) || {}),
+                var options = scope.$eval(attrs.datepicker) || {},
                     picker;
 
                 if (!ngModel) {
