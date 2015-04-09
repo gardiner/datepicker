@@ -22,13 +22,14 @@ function Datepicker(element, options) {
  * Initializes the datepicker.
  */
 Datepicker.prototype.init = function() {
-    var self = this;
+    var self = this,
+        lastopened;
 
     self.$picker = $('<div></div>')
     .hide()
     .addClass("picker")
 
-    //high level events
+    //internal events
     .on('_render.datepicker', function() {
         self.$picker
         .trigger('_reposition')
@@ -56,27 +57,24 @@ Datepicker.prototype.init = function() {
     })
     .on('click.datepicker', '.day:not(.invalid)', function(e) {
         var picked = moment($(e.target).attr('data-date'));
-
-        self.value = picked;
-        self.$input.val(picked.format(self.options.dateformat));
-        self.$element.val(self.format_value(picked));
-        
-        self.$element
-        .trigger('change', self.value)
-        .trigger('hidedatepicker');
+        self.set_value(picked);
     })
     .on('click.datepicker', function(e) {
         e.stopPropagation(); //prevent event bubbling
     });
 
 
-    self.$input = $('<input type="text"/>')
+    self.$input = $('<input type="text" class="input"/>')
     .attr('readonly', self.options.readonly)
     .attr('class', self.$element.attr('class'))
-    .addClass("input")
     .attr('placeholder', self.options.placeholder)
-    .on('click.datepicker datepicker.datepicker', function(e) {
-        if (e.type == 'click' && self.$picker.is(':visible')) {
+
+    //user interaction
+    .on('change.datepicker', function(e) {
+        self.set_value(self.parse_value(this));
+    })
+    .on('click.datepicker focus.datepicker', function(e) {
+        if (e.type == 'click' && self.$picker.is(':visible') && (new Date() - lastopened > 100)) {
             self.$element.trigger('hidedatepicker');
         } else {
             $('.hasDatepicker').not(self.$element).trigger('hidedatepicker');
@@ -95,9 +93,12 @@ Datepicker.prototype.init = function() {
     self.$element
     .attr('readonly', 'readonly')
     .addClass('hasDatepicker')
+
+    //api events
     .on('showdatepicker.datepicker', function(e) {
         self.displayed = (self.value || moment()).clone().date(1);
         self.$picker.show().trigger('_render');
+        lastopened = new Date();
 
         //global events
         $(document)
@@ -115,23 +116,41 @@ Datepicker.prototype.init = function() {
         //global events
         $(document).off('.datepicker');
     })
-    .on('change.datepicker', function(e, internal) {
-        var parsed = moment(self.parse_value(this));
-        if (!internal && parsed.isValid()) {
-            self.value = parsed;
-            self.$input.val(parsed.format(self.options.dateformat));
+
+    //user interaction
+    .on('change.datepicker', function(e, internal_event) {
+        if (internal_event != 'internal_event') {
+            self.set_value(self.parse_value(this));
         }
     })
     .hide()
     .after(self.$container);
 };
 /**
+ * Sets the current datepicker value.
+ */
+Datepicker.prototype.set_value = function(value) {
+    var self = this;
+
+    if (!moment(value).isValid()) {
+        return;
+    }
+
+    self.value = value;
+    self.$input.val(value.format(self.options.dateformat));
+    self.$element
+    .val(self.format_value(value))
+    .trigger('change', 'internal_event') //prevent endless loop
+    .trigger('hidedatepicker');
+};
+/**
  * Parses the current value of the input element.
  */
-Datepicker.prototype.parse_value = function() {
+Datepicker.prototype.parse_value = function(input) {
     var self = this,
-        format = self.$element.is('[type="date"]') ? TYPEDATE_FORMAT : self.options.dateformat;
-    return moment(self.$element.val(), format);
+        $input = $(input),
+        format = $input.is('[type="date"]') ? TYPEDATE_FORMAT : self.options.dateformat;
+    return moment($input.val(), format);
 };
 /**
  * Formats the specified value for the input element.

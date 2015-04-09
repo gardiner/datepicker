@@ -12,7 +12,7 @@
     <script type='text/javascript'>
       $(function() {
         $('.jquery .datepicker')
-        .datepicker()
+        .datepicker({readonly: false})
         .on('change', function() {
           $(this).siblings('.value').text($(this).val());
         });
