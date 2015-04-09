@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+  <head>
+    <meta content='text/html;charset=utf-8' http-equiv='Content-Type'>
+    <meta content='width=device-width, initial-scale=1' name='viewport'>
+    <link href='demo.css' rel='stylesheet' type='text/css'>
+    <link href='../src/datepicker.css' rel='stylesheet' type='text/css'>
+    <script src='../bower_components/jquery/dist/jquery.min.js' type='text/javascript'></script>
+    <script src='../bower_components/moment/min/moment.min.js' type='text/javascript'></script>
+    <script src='../bower_components/angularjs/angular.min.js' type='text/javascript'></script>
+    <script src='../src/datepicker.js' type='text/javascript'></script>
+    <script type='text/javascript'>
+      $(function() {
+        $('.jquery .datepicker')
+        .datepicker()
+        .on('change', function() {
+          $(this).siblings('.value').text($(this).val());
+        });
+      });
+
+      angular.module('datepicker.demo', ['datepicker'])
+      .run(['$rootScope', function($rootScope) {
+        $rootScope.now = moment().toDate();
+      }]);
+    </script>
+    <title>Datepicker Demo</title>
+  </head>
+  <body>
+    <h2>Datepicker Demo</h2>
+
+    <h3>jQuery</h3>
+
+    <div class="jquery">
+      <div class="formrow">
+        <label for="date1">Input[type="text"]</label>
+        <input id="date1" type="text" class="datepicker"/>
+        <span class="value"></span>
+      </div>
+
+      <div class="formrow">
+        <label for="date2">Input[type="date"]</label>
+        <input id="date2" type="date" class="datepicker"/>
+        <span class="value"></span>
+      </div>
+    </div>
+
+    <h3>angular.js</h3>
+    <div class="angular" data-ng-app="datepicker.demo">
+      <div class="formrow">
+        <label for="date3">Input[type="text"]</label>
+        <input id="date3" type="text" data-datepicker="{theme: 'flat'}" data-ng-model="value3"/>
+        <span class="value">{{ value3 }}</span>
+      </div>
+
+      <div class="formrow">
+        <label for="date4">Input[type="date"]</label>
+        <input id="date4" type="date" data-datepicker="{theme: false}" data-ng-model="value4"/>
+        <span class="value">{{ value4 }}</span>
+      </div>
+
+      <button data-ng-click="value4=now;value3='01.01.2022'">Do</button>
+    </div>
+
+  </body>
+</html>

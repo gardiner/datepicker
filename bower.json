@@ -1,0 +1,26 @@
+{
+  "name": "datepicker",
+  "version": "0.0.0",
+  "authors": [
+    "Ole Trenner <ole@jayotee.de>"
+  ],
+  "description": "Datepicker for jQuery and/or angular.js.",
+  "keywords": [
+    "jquery",
+    "angular.js",
+    "datepicker"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.3",
+    "moment": "~2.10.2"
+  }
+}
