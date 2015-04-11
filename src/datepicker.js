@@ -7,6 +7,7 @@ function Datepicker(element, options) {
     var self = this,
         $element = $(element),
         defaults = {
+            initial_value: null,
             dateformat: 'DD.MM.YYYY',
             placeholder: $element.attr('placeholder') || '',
             theme: 'basic',
@@ -17,7 +18,7 @@ function Datepicker(element, options) {
 
     self.options = $.extend({}, defaults, options);
     self.$element = $element;
-    self.value = $element.val();
+    self.value = self.options.initial_value ? moment(self.options.initial_value, self.options.dateformat) : self.parse_value($element);
     self.init();
 }
 /**
@@ -70,6 +71,7 @@ Datepicker.prototype.init = function() {
     .attr('readonly', self.options.readonly)
     .attr('class', self.$element.attr('class'))
     .attr('placeholder', self.options.placeholder)
+    .val(self.format_value(self.value))
 
     //user interaction
     .on('change.datepicker', function(e) {
@@ -151,8 +153,9 @@ Datepicker.prototype.set_value = function(value) {
 Datepicker.prototype.parse_value = function(input) {
     var self = this,
         $input = $(input),
-        format = $input.is('[type="date"]') ? TYPEDATE_FORMAT : self.options.dateformat;
-    return moment($input.val(), format);
+        format = $input.is('[type="date"]') ? TYPEDATE_FORMAT : self.options.dateformat,
+        parsed = moment($input.val(), format);
+    return parsed.isValid() ? parsed : null;
 };
 /**
  * Formats the specified value for the input element.
@@ -160,7 +163,9 @@ Datepicker.prototype.parse_value = function(input) {
 Datepicker.prototype.format_value = function(value) {
     var self = this,
         format = self.$element.is('[type="date"]') ? TYPEDATE_FORMAT : self.options.dateformat;
-    return moment(value).format(format);
+
+    value = moment(value);
+    return value.isValid() ? value.format(format) : null;
 };
 /**
  * Returns day of the week with monday = 0, sunday = 6
@@ -249,6 +254,7 @@ if (typeof angular != 'undefined') {
                     return;
                 }
 
+                options.initial_value = scope.$eval(attrs.ngModel);
                 picker = new Datepicker(element, options);
 
                 ngModel.$render = function() {

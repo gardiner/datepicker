@@ -15,12 +15,14 @@
         .datepicker({readonly: false})
         .on('change', function() {
           $(this).siblings('.value').text($(this).val());
-        });
+        })
+        .trigger('change');
       });
 
       angular.module('datepicker.demo', ['datepicker'])
-      .run(['$rootScope', function($rootScope) {
-        $rootScope.now = moment().toDate();
+      .controller('datepicker.controller', ['$scope', function($scope) {
+        $scope.value3 = "14.07.2022";
+        $scope.today = moment().toDate();
       }]);
     </script>
     <title>Datepicker Demo</title>
@@ -33,7 +35,7 @@
     <div class="jquery">
       <div class="formrow">
         <label for="date1">Input[type="text"], basic style</label>
-        <input id="date1" type="text" class="datepicker"/>
+        <input id="date1" type="text" class="datepicker" value="20.03.2015"/>
         <span class="value"></span>
       </div>
 
@@ -45,7 +47,7 @@
     </div>
 
     <h3>angular.js</h3>
-    <div class="angular" data-ng-app="datepicker.demo">
+    <div class="angular" data-ng-app="datepicker.demo" data-ng-controller="datepicker.controller">
       <div class="formrow">
         <label for="date3">Input[type="text"], flat style</label>
         <input id="date3" type="text" data-datepicker="{theme: 'flat'}" data-ng-model="value3"/>
@@ -58,7 +60,7 @@
         <span class="value">{{ value4 }}</span>
       </div>
 
-      <button data-ng-click="value3='01.01.2022';value4=now;">Set date</button>
+      <button data-ng-click="value3='01.01.2022';value4=today;">Set date</button>
     </div>
 
   </body>
