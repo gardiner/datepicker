@@ -1,0 +1,23 @@
+{
+  "name": "datepicker",
+  "version": "0.0.4",
+  "description": "Datepicker for jQuery and/or angular.js.",
+  "keywords": [
+    "jquery",
+    "angular.js",
+    "datepicker"
+  ],
+  "main": "src/datepicker.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gardiner/datepicker.git"
+  },
+  "author": "Ole Trenner <ole.trenner@3dbits.de>",
+  "dependencies": {
+    "jquery": "~2.1.3",
+    "moment": "~2.10.2"
+  },
+  "homepage": "https://github.com/gardiner/datepicker#readme"
+}
